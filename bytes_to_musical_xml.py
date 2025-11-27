@@ -3,7 +3,7 @@ import argparse
 
 import partitura
 from partitura.score import Part, Note, Measure, TimeSignature, KeySignature, Clef
-from typing import Tuple
+from typing import Tuple, List
 
 
 # -----------------------------
@@ -47,14 +47,21 @@ def nibble_to_note(n: int) -> Tuple[str, int, int]:
 def bytes_to_musicxml(data: bytes,
                       quarter_duration: int = 480,
                       part_name: str = "Encoded Bytes",
-                      notes_per_measure: int = 16) -> str:
+                      notes_per_measure: int = 16,
+                      validate: bool = True) -> str:
     """
-    Convert arbitrary bytes into a sequence of musical notes
-    encoded using 4-bit chunks, and output MusicXML as text.
+    Convert arbitrary bytes into a sequence of musical notes encoded using 4-bit chunks.
 
     Parameters:
-    - notes_per_measure: Number of notes per measure (default 16 = 4 bars of 4/4 time)
+    - quarter_duration: Tick length of one quarter note (must be > 0)
+    - part_name: Name for the part
+    - notes_per_measure: Positive number of notes per measure
+    - validate: If True, prints warnings for any zero-length notes/measures
     """
+    if quarter_duration <= 0:
+        raise ValueError(f"quarter_duration must be > 0 (got {quarter_duration})")
+    if notes_per_measure <= 0:
+        raise ValueError(f"notes_per_measure must be > 0 (got {notes_per_measure})")
 
     part = Part(id="P0", part_name=part_name, quarter_duration=quarter_duration)
 
@@ -97,6 +104,18 @@ def bytes_to_musicxml(data: bytes,
             # Reset measure counter
             if notes_in_measure >= notes_per_measure:
                 notes_in_measure = 0
+
+    if validate:
+        zero_note_ids: List[str] = []
+        for n in part.notes:
+            if hasattr(n, 'start') and hasattr(n, 'end'):
+                if n.end - n.start <= 0:
+                    zero_note_ids.append(getattr(n, 'id', 'unknown'))
+        zero_measures = [m for m in part.measures if hasattr(m, 'start') and hasattr(m, 'end') and m.end - m.start <= 0]
+        if zero_note_ids:
+            print(f"[WARN] Zero or negative duration notes detected: {zero_note_ids}")
+        if zero_measures:
+            print(f"[WARN] Zero-length measures detected: {[getattr(m,'number','?') for m in zero_measures]}")
 
     # Output MusicXML as string (out=None → returns XML as bytes)
     xml_bytes = partitura.save_musicxml(part, out=None)
@@ -142,6 +161,7 @@ Examples:
         default="Encoded Bytes",
         help="Name of the musical part (default: 'Encoded Bytes')"
     )
+    parser.add_argument("--no-validate", action="store_true", help="Disable zero-duration sanity checks")
 
     args = parser.parse_args()
 
@@ -170,7 +190,8 @@ Examples:
     xml = bytes_to_musicxml(
         data,
         part_name=args.part_name,
-        notes_per_measure=args.notes_per_measure
+        notes_per_measure=args.notes_per_measure,
+        validate=not args.no_validate
     )
 
     # Determine output path
