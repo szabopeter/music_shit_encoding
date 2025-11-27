@@ -106,12 +106,21 @@ def bytes_to_musicxml(data: bytes,
                 notes_in_measure = 0
 
     if validate:
+        # Avoid arithmetic on partitura's internal time objects; only compare if numeric.
         zero_note_ids: List[str] = []
         for n in part.notes:
-            if hasattr(n, 'start') and hasattr(n, 'end'):
-                if n.end - n.start <= 0:
+            start = getattr(n, 'start', None)
+            end = getattr(n, 'end', None)
+            if isinstance(start, (int, float)) and isinstance(end, (int, float)):
+                if end <= start:
                     zero_note_ids.append(getattr(n, 'id', 'unknown'))
-        zero_measures = [m for m in part.measures if hasattr(m, 'start') and hasattr(m, 'end') and m.end - m.start <= 0]
+        zero_measures = []
+        for m in part.measures:
+            m_start = getattr(m, 'start', None)
+            m_end = getattr(m, 'end', None)
+            if isinstance(m_start, (int, float)) and isinstance(m_end, (int, float)):
+                if m_end <= m_start:
+                    zero_measures.append(m)
         if zero_note_ids:
             print(f"[WARN] Zero or negative duration notes detected: {zero_note_ids}")
         if zero_measures:
