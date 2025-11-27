@@ -1,3 +1,4 @@
 partitura
 MuseParse
 pikepdf
+typing_extensions

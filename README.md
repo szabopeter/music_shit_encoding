@@ -137,32 +137,55 @@ Each byte is split into two 4-bit nibbles, where each nibble encodes:
 - **Bit 2**: Accidental (flat or sharp)
 - **Bit 3**: Octave (4 or 5)
 
-### Basic Example
+### Converting MusicXML back to Bytes
 
-```python
-# Encoding: Convert data to music-xml
-# from music_encoding import encode_to_musicxml
-# data = b"Hello, World!"
-# musicxml = encode_to_musicxml(data)
+The `musical_xml_to_bytes.py` script decodes a MusicXML file back to the original bytes, completing the round-trip encoding/decoding cycle.
 
-# Generation: Convert music-xml to PDF and MIDI
-# from music_encoding import generate_score
-# generate_score(musicxml, output_pdf="score.pdf", output_midi="score.mid")
+#### Basic Usage
 
-# Decoding: Extract original data from music-xml
-# from music_encoding import decode_from_musicxml
-# recovered_data = decode_from_musicxml(musicxml)
-# assert data == recovered_data
+```bash
+# Decode a MusicXML file and print the result
+python musical_xml_to_bytes.py encoded.musicxml
+
+# Decode and save to a binary file
+python musical_xml_to_bytes.py encoded.musicxml -o decoded.bin
+
+# Suppress validation warnings
+python musical_xml_to_bytes.py encoded.musicxml --no-validate
 ```
+
+#### Command-Line Options
+
+- `input_file`: Path to MusicXML file to decode (required)
+- `-o, --output`: Output binary file path (optional, prints hex/ASCII to stdout if not specified)
+- `--no-validate`: Disable warnings for unexpected note configurations
+
+### Round-Trip Example
+
+```bash
+# Encode a file
+python bytes_to_musical_xml.py input.txt -o encoded.musicxml
+
+# Decode it back
+python musical_xml_to_bytes.py encoded.musicxml -o decoded.txt
+
+# Verify they match
+diff input.txt decoded.txt
+```
+
+### Basic Example
 
 ## Project Structure
 
 ```
 music_shit_encoding/
-├── README.md              # This file
-├── LICENSE                # MIT License
-├── requirements.txt       # Python dependencies
-└── ...                    # Source code (to be added)
+├── README.md                      # This file
+├── LICENSE                        # MIT License
+├── requirements.txt               # Python dependencies
+├── bytes_to_musical_xml.py        # Encoder: converts arbitrary data to MusicXML
+├── musical_xml_to_bytes.py        # Decoder: converts MusicXML back to data
+├── sample.txt                     # Example test file
+└── test_data/                     # Output directory for generated MusicXML files
 ```
 
 ## License
