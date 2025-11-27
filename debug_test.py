@@ -1,5 +1,10 @@
 import partitura
 from partitura.score import Part, Note, Measure, TimeSignature, KeySignature, Clef
+import os
+
+# Create test_data directory if it doesn't exist
+output_dir = "test_data"
+os.makedirs(output_dir, exist_ok=True)
 
 # Create a part
 part = Part(id="P0", part_name="Test", quarter_duration=480)
@@ -35,10 +40,11 @@ print("Measures in part:", len(list(part.measures)))
 xml_bytes = partitura.save_musicxml(part, out=None)
 xml_text = xml_bytes.decode('utf-8') if isinstance(xml_bytes, bytes) else xml_bytes
 
-with open("debug_output.musicxml", "w", encoding="utf-8") as f:
+output_path = os.path.join(output_dir, "debug_output.musicxml")
+with open(output_path, "w", encoding="utf-8") as f:
     f.write(xml_text)
 
-print("Wrote debug_output.musicxml")
+print(f"Wrote {output_path}")
 print("\nFirst 1000 chars of XML:")
 print(xml_text[:1000])
 

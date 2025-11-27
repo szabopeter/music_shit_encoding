@@ -1,6 +1,7 @@
 import partitura
 from partitura.score import Part, Note, Measure, TimeSignature, KeySignature, Clef
 from typing import Tuple
+import os
 
 
 # -----------------------------
@@ -119,13 +120,18 @@ def bytes_to_musicxml(data: bytes,
 # Example usage
 # -----------------------------
 if __name__ == "__main__":
+    # Create test_data directory if it doesn't exist
+    output_dir = "test_data"
+    os.makedirs(output_dir, exist_ok=True)
+
     # Any byte input — text, binary, anything:
     sample = b"Hello"
     print(f"Input: {sample}")
     xml = bytes_to_musicxml(sample)
 
-    with open("byte_music.musicxml", "w", encoding="utf-8") as f:
+    output_path = os.path.join(output_dir, "byte_music.musicxml")
+    with open(output_path, "w", encoding="utf-8") as f:
         f.write(xml)
 
-    print("Wrote byte_music.musicxml")
+    print(f"Wrote {output_path}")
 
