@@ -95,97 +95,48 @@ pip install -r requirements.txt
 ## Dependencies
 
 - **partitura**: A library for handling music notation in various formats including Music-XML
+- **pikepdf**: Required for PDF attachment operations
 
 For detailed information about dependencies, see `requirements.txt`.
 
 ## Usage
 
-### Converting Bytes to MusicXML
+### Streamlined Workflow
 
-The `bytes_to_musical_xml.py` script converts arbitrary byte data into MusicXML notation using a 4-bit encoding scheme.
-
-#### Basic Usage
-
-```bash
-# Convert a file to MusicXML (outputs to test_data/byte_music.musicxml)
-python bytes_to_musical_xml.py input.txt
-
-# Use default "Hello" sample if no file is provided
-python bytes_to_musical_xml.py
-
-# Specify custom output path
-python bytes_to_musical_xml.py input.bin -o output.musicxml
-
-# Customize notes per measure (default: 16)
-python bytes_to_musical_xml.py input.txt --notes-per-measure 8
-
-# Set custom part name
-python bytes_to_musical_xml.py input.txt --part-name "My Data"
-
-# Combine all options
-python bytes_to_musical_xml.py data.bin -o music.xml -n 8 -p "Secret Message"
-
-# Example using the provided sample.txt test file
+```powershell
+# 1) Encode bytes to MusicXML (from repo root)
 python bytes_to_musical_xml.py sample.txt -o test_data/sample_music.musicxml -p "Sample Text"
 
-# attach music.xml to pdf
-python add_attachment.py
+# 2) Convert MusicXML to LilyPond (run from C:\DevTools\lilypond-2.24.4)
+cd C:\DevTools\lilypond-2.24.4
+bin\musicxml2ly.exe -o output.ly C:\Repos\music_shit_encoding\test_data\sample_music.musicxml
 
-# remove attachment from pdf
-python remove_attachment.py
+# 3) Render PDF (still in C:\DevTools\lilypond-2.24.4)
+bin\lilypond.exe -o shit output.ly  # produces shit.pdf
+
+# 4) Attach MusicXML to PDF (from repo root)
+cd C:\Repos\music_shit_encoding
+Copy-Item .\test_data\sample_music.musicxml .\music.xml -Force
+python add_attachment.py  # -> more_shit.pdf
+
+# 5) Remove attachment and extract MusicXML (from repo root)
+python remove_attachment.py  # -> check_shit.pdf and check_music.xml
+
+# 6) Decode MusicXML back to bytes (from repo root)
+python musical_xml_to_bytes.py check_music.xml -o decoded_sample.txt
 ```
 
-#### Command-Line Options
+### Command-Line Options
 
+Encoder (`bytes_to_musical_xml.py`):
 - `input_file`: Path to file to convert (optional, uses "Hello" if not provided)
-- `-o, --output`: Output MusicXML file path (default: test_data/byte_music.musicxml)
+- `-o, --output`: Output MusicXML file path (default: music.xml)
 - `-n, --notes-per-measure`: Number of notes per measure (default: 16)
 - `-p, --part-name`: Name of the musical part (default: "Encoded Bytes")
 
-#### Encoding Scheme
-
-Each byte is split into two 4-bit nibbles, where each nibble encodes:
-- **Bits 0-1**: Pitch (C, D, E, or F)
-- **Bit 2**: Accidental (flat or sharp)
-- **Bit 3**: Octave (4 or 5)
-
-### Converting MusicXML back to Bytes
-
-The `musical_xml_to_bytes.py` script decodes a MusicXML file back to the original bytes, completing the round-trip encoding/decoding cycle.
-
-#### Basic Usage
-
-```bash
-# Decode a MusicXML file and print the result
-python musical_xml_to_bytes.py encoded.musicxml
-
-# Decode and save to a binary file
-python musical_xml_to_bytes.py encoded.musicxml -o decoded.bin
-
-# Suppress validation warnings
-python musical_xml_to_bytes.py encoded.musicxml --no-validate
-```
-
-#### Command-Line Options
-
+Decoder (`musical_xml_to_bytes.py`):
 - `input_file`: Path to MusicXML file to decode (required)
-- `-o, --output`: Output binary file path (optional, prints hex/ASCII to stdout if not specified)
-- `--no-validate`: Disable warnings for unexpected note configurations
-
-### Round-Trip Example
-
-```bash
-# Encode a file
-python bytes_to_musical_xml.py input.txt -o encoded.musicxml
-
-# Decode it back
-python musical_xml_to_bytes.py encoded.musicxml -o decoded.txt
-
-# Verify they match
-diff input.txt decoded.txt
-```
-
-### Basic Example
+- `-o, --output`: Output file path (optional)
 
 ## Project Structure
 
@@ -196,6 +147,8 @@ music_shit_encoding/
 ├── requirements.txt               # Python dependencies
 ├── bytes_to_musical_xml.py        # Encoder: converts arbitrary data to MusicXML
 ├── musical_xml_to_bytes.py        # Decoder: converts MusicXML back to data
+├── add_attachment.py              # Attaches music.xml to shit.pdf -> more_shit.pdf
+├── remove_attachment.py           # Extracts from more_shit.pdf -> check_music.xml
 ├── sample.txt                     # Example test file
 └── test_data/                     # Output directory for generated MusicXML files
 ```
@@ -218,17 +171,3 @@ Contributions are welcome! Please feel free to submit issues and pull requests.
 ---
 
 **Note**: This project explores research-driven and enterprise-grade approaches to data encoding through music notation.
-
-
-
-
-python3 bytes_to_musical_xml.py sample.txt -o test_data/sample_music.musicxml -p "Sample Text"
-
-cd /Users/szaszdominik/programming/py/musicXML/music-shit2
-/Users/szaszdominik/Downloads/lilypond-2.24.4/bin/lilypond output.ly
-
-
-
-cd /Users/szaszdominik/programming/py/musicXML/music-shit2/Users/szaszdominik/Downloads/lilypond-2.24.4/bin/musicxml2ly \
-  -o output.ly \
-  test_data/sample_music.musicxml
