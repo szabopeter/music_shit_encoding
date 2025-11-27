@@ -2,8 +2,16 @@ from pikepdf import Pdf, AttachedFileSpec, Name, Dictionary, Array
 
 from pathlib import Path
 
-pdf = Pdf.open('../tests/resources/fourpages.pdf')
+origin_pdf_file_name = 'shit.pdf'
 
-filespec = AttachedFileSpec.from_filepath(pdf, Path('../README.md'))
+pdf = Pdf.open(origin_pdf_file_name)
 
-pdf.attachments['README.md'] = filespec
+xml_file_name = 'music.xml'
+
+filespec = AttachedFileSpec.from_filepath(pdf, Path(xml_file_name))
+
+pdf.attachments[xml_file_name] = filespec
+
+dest_pdf_file_name = 'more_shit.pdf'
+
+pdf.save(dest_pdf_file_name)
