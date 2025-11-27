@@ -76,6 +76,9 @@ python bytes_to_musical_xml.py input.txt --part-name "My Data"
 
 # Combine all options
 python bytes_to_musical_xml.py data.bin -o music.xml -n 8 -p "Secret Message"
+
+# Example using the provided sample.txt test file
+python bytes_to_musical_xml.py sample.txt -o test_data/sample_music.musicxml -p "Sample Text"
 ```
 
 #### Command-Line Options
