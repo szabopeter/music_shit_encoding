@@ -6,6 +6,11 @@ A bidirectional encoding-decoding system that converts arbitrary data to and fro
 
 This project provides a novel approach to data serialization by leveraging music notation as an encoding medium. Convert any data into music-xml format, generate beautiful PDF scores and MIDI files, and decode the music back to retrieve the original data.
 
+### Important defaults
+```
+input.json ==> music.xml ==> shit.pdf (withOUT embedded input.json) == more_shit.pdf (WITH embedded input.json)
+```
+
 ### Core Workflow
 
 ```
