@@ -1,4 +1,5 @@
 import os
+import argparse
 
 import partitura
 from partitura.score import Part, Note, Measure, TimeSignature, KeySignature, Clef
@@ -111,15 +112,74 @@ def bytes_to_musicxml(data: bytes,
 # Example usage
 # -----------------------------
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description="Convert arbitrary bytes to MusicXML notation",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  python bytes_to_musical_xml.py input.txt
+  python bytes_to_musical_xml.py input.bin -o output.musicxml
+  python bytes_to_musical_xml.py input.txt --notes-per-measure 8
+        """
+    )
+    parser.add_argument(
+        "input_file",
+        nargs="?",
+        help="Input file to convert (if not provided, uses 'Hello' as sample)"
+    )
+    parser.add_argument(
+        "-o", "--output",
+        help="Output MusicXML file path (default: test_data/byte_music.musicxml)"
+    )
+    parser.add_argument(
+        "-n", "--notes-per-measure",
+        type=int,
+        default=16,
+        help="Number of notes per measure (default: 16)"
+    )
+    parser.add_argument(
+        "-p", "--part-name",
+        default="Encoded Bytes",
+        help="Name of the musical part (default: 'Encoded Bytes')"
+    )
+
+    args = parser.parse_args()
+
     # Create test_data directory if it doesn't exist
     output_dir = "test_data"
     os.makedirs(output_dir, exist_ok=True)
 
-    # Any byte input — text, binary, anything:
-    sample = b"Hello"
-    xml = bytes_to_musicxml(sample)
+    # Read input data
+    if args.input_file:
+        try:
+            with open(args.input_file, "rb") as f:
+                data = f.read()
+            print(f"Read {len(data)} bytes from {args.input_file}")
+        except FileNotFoundError:
+            print(f"Error: File '{args.input_file}' not found")
+            exit(1)
+        except Exception as e:
+            print(f"Error reading file: {e}")
+            exit(1)
+    else:
+        # Default sample
+        data = b"Hello"
+        print("No input file provided, using sample: 'Hello'")
 
-    output_path = os.path.join(output_dir, "byte_music.musicxml")
+    # Convert to MusicXML
+    xml = bytes_to_musicxml(
+        data,
+        part_name=args.part_name,
+        notes_per_measure=args.notes_per_measure
+    )
+
+    # Determine output path
+    if args.output:
+        output_path = args.output
+    else:
+        output_path = os.path.join(output_dir, "byte_music.musicxml")
+
+    # Write output
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(xml)
 

@@ -52,7 +52,45 @@ For detailed information about dependencies, see `requirements.txt`.
 
 ## Usage
 
-*(Documentation to be added as project develops)*
+### Converting Bytes to MusicXML
+
+The `bytes_to_musical_xml.py` script converts arbitrary byte data into MusicXML notation using a 4-bit encoding scheme.
+
+#### Basic Usage
+
+```bash
+# Convert a file to MusicXML (outputs to test_data/byte_music.musicxml)
+python bytes_to_musical_xml.py input.txt
+
+# Use default "Hello" sample if no file is provided
+python bytes_to_musical_xml.py
+
+# Specify custom output path
+python bytes_to_musical_xml.py input.bin -o output.musicxml
+
+# Customize notes per measure (default: 16)
+python bytes_to_musical_xml.py input.txt --notes-per-measure 8
+
+# Set custom part name
+python bytes_to_musical_xml.py input.txt --part-name "My Data"
+
+# Combine all options
+python bytes_to_musical_xml.py data.bin -o music.xml -n 8 -p "Secret Message"
+```
+
+#### Command-Line Options
+
+- `input_file`: Path to file to convert (optional, uses "Hello" if not provided)
+- `-o, --output`: Output MusicXML file path (default: test_data/byte_music.musicxml)
+- `-n, --notes-per-measure`: Number of notes per measure (default: 16)
+- `-p, --part-name`: Name of the musical part (default: "Encoded Bytes")
+
+#### Encoding Scheme
+
+Each byte is split into two 4-bit nibbles, where each nibble encodes:
+- **Bits 0-1**: Pitch (C, D, E, or F)
+- **Bit 2**: Accidental (flat or sharp)
+- **Bit 3**: Octave (4 or 5)
 
 ### Basic Example
 
