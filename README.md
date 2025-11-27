@@ -128,9 +128,12 @@ This project is licensed under the MIT License - see the `LICENSE` file for deta
 
 Contributions are welcome! Please feel free to submit issues and pull requests.
 
-## Author
+## Contributors
 
-**Peter Szabo** (szabopeter)
+- **Falvasi Bulcsú**
+- **Szabó Péter**
+- **Szász Dominik**
+- **Tóth András**
 
 ---
 
