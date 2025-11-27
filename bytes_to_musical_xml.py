@@ -135,6 +135,24 @@ def bytes_to_musicxml(data: bytes,
         xml_text = xml_bytes
     return xml_text
 
+import xml.etree.ElementTree as ET
+
+def add_measure_numbers(xml_in: str) -> str:
+    tree = ET.fromstring(xml_in)
+    ns = ''  # partitura usually uses no default namespace for score-partwise
+
+    measure_counter = 1
+    for part in tree.findall('part'):
+        for measure in part.findall('measure'):
+            if 'number' not in measure.attrib:
+                measure.set('number', str(measure_counter))
+            else:
+                # if present but empty, fix it too
+                if not measure.attrib['number']:
+                    measure.set('number', str(measure_counter))
+            measure_counter += 1
+
+    return ET.tostring(tree, encoding='utf-8', xml_declaration=True).decode('utf-8')
 
 # -----------------------------
 # Example usage
@@ -202,6 +220,8 @@ Examples:
         notes_per_measure=args.notes_per_measure,
         validate=not args.no_validate
     )
+    xml = add_measure_numbers(xml)
+
 
     # Determine output path
     if args.output:
