@@ -11,6 +11,12 @@ This project provides a novel approach to data serialization by leveraging music
 input.json ==> music.xml ==> shit.pdf (withOUT embedded input.json) == more_shit.pdf (WITH embedded input.json)
 ```
 
+Check back:
+```
+more_shit.pdf ==> check_shit.pdf + check_music.xml ==> check_input.json
+```
+
+
 ### Core Workflow
 
 ```
