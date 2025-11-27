@@ -10,14 +10,14 @@ Prerequisites:
 1) Encode bytes to MusicXML (from repo root):
 
 ```powershell
-python bytes_to_musical_xml.py sample.txt -o test_data/sample_music.musicxml -p "Sample Text"
+python bytes_to_musical_xml.py `input.json` -o `test_data/music.musicxml` -p "Sample Text"
 ```
 
 2) Convert MusicXML to LilyPond (run from C:\DevTools\lilypond-2.24.4):
 
 ```powershell
 cd C:\DevTools\lilypond-2.24.4
-bin\musicxml2ly.exe -o output.ly C:\Repos\music_shit_encoding\test_data\sample_music.musicxml
+bin\musicxml2ly.exe -o output.ly C:\Repos\music_shit_encoding\test_data\music.musicxml
 ```
 
 3) Render PDF (still in C:\DevTools\lilypond-2.24.4):
@@ -31,7 +31,7 @@ bin\lilypond.exe -o shit output.ly  # produces shit.pdf
 ```powershell
 cd C:\Repos\music_shit_encoding
 # Ensure the expected filename for attachment exists
-Copy-Item .\test_data\sample_music.musicxml .\music.xml -Force
+Copy-Item .\test_data\music.xmll .\music.xml -Force
 python add_attachment.py  # attaches music.xml to shit.pdf -> more_shit.pdf
 ```
 
