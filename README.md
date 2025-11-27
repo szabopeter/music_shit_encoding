@@ -16,6 +16,43 @@ Arbitrary Data ↔ Music-XML ↔ PDF Scores / MIDI
 **Generation**: Convert music-xml to printable PDF scores and optionally MIDI files
 **Decoding**: Extract the original data from the music-xml representation
 
+### Full data flow (ASCII diagram)
+
+Below is a complete ASCII diagram of the encoding and decoding pipeline, showing the round-trip from arbitrary data to printable/audio outputs and back.
+
+```
+   +--------+       +-----------+       +-----------+       +----------------+
+   |  Data  | <---> | MusicXML  | <---> | LilyPond  | <---> | PDF  +  MIDI   |
+   +--------+       +-----------+       +-----------+       +----------------+
+```
+
+Notes:
+- "LilyPond" is used here as the layout/engraving step that renders MusicXML into printable PDF (via LilyPond or converted formats) and can also be used to produce MIDI output.
+- The pipeline is bidirectional: once the score is rendered or exported, tools can re-extract or re-serialize the MusicXML representation and decode it back to the original data.
+
+### Alternative transmission channels (state-of-the-art / enterprise-grade)
+
+Below are two state-of-the-art / enterprise-grade alternative transmission channels illustrating how generated artifacts might be transmitted and recovered in non-standard channels.
+
+```
+PDF (printed score)                      __
+    |                                   __(.)<
+    v                                   \___)
+    Pigeon (physical courier)             \ /
+    |                                      \/
+    v
+ Receiver (human) -> scan -> score-recognition (OMR) -> MusicXML -> Data
+
+
+MIDI file -> FM transmitter -> radio waves (analog) -> FM receiver -> audio capture -> audio2midi/audio2score -> MusicXML -> Data
+
+```
+
+Notes:
+- These alternative channels are presented as high-level, enterprise-oriented transmission scenarios. They demonstrate that once artifacts exist in human-readable (PDF) or audio (MIDI) forms, non-standard delivery mechanisms are possible and may be integrated into workflows.
+- Practical recovery from these channels requires robust tooling and engineering: scanned PDFs need production-grade optical music recognition (OMR) and image preprocessing pipelines, while audio capture requires high-fidelity audio capture, noise resilience, and reliable audio-to-score or audio-to-MIDI conversion to approach the fidelity of the native MusicXML path.
+
+
 ## Features
 
 - 🔄 **Bidirectional Conversion**: Seamlessly encode data to music and decode music back to data
@@ -140,4 +177,4 @@ Contributions are welcome! Please feel free to submit issues and pull requests.
 
 ---
 
-**Note**: This is an experimental project exploring creative approaches to data encoding through music notation.
+**Note**: This project explores research-driven and enterprise-grade approaches to data encoding through music notation.
