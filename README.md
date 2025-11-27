@@ -13,7 +13,7 @@ input.json ==> music.xml ==> shit.pdf (withOUT embedded input.json) == more_shit
 
 Check back:
 ```
-more_shit.pdf ==> check_shit.pdf + check_music.xml ==> check_input.json
+more_shit.pdf ==> check_music.xml ==> check_input.json
 ```
 
 
