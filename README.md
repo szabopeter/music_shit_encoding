@@ -175,7 +175,7 @@ Contributions are welcome! Please feel free to submit issues and pull requests.
 
 ## Contributors
 
-- **Falvasi Bulcsú**
+- **Farmasi Bulcsú**
 - **Szabó Péter**
 - **Szász Dominik**
 - **Tóth András**
