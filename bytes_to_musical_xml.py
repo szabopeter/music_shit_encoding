@@ -145,9 +145,9 @@ if __name__ == "__main__":
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  python bytes_to_musical_xml.py input.txt
-  python bytes_to_musical_xml.py input.bin -o output.musicxml
-  python bytes_to_musical_xml.py input.txt --notes-per-measure 8
+  python bytes_to_musical_xml.py input.json
+  python bytes_to_musical_xml.py input.json -o music.xml
+  python bytes_to_musical_xml.py input.json --notes-per-measure 8 -o music.xml
         """
     )
     parser.add_argument(
@@ -157,7 +157,7 @@ Examples:
     )
     parser.add_argument(
         "-o", "--output",
-        help="Output MusicXML file path (default: test_data/byte_music.musicxml)"
+        help="Output MusicXML file path (default: music.xml)"
     )
     parser.add_argument(
         "-n", "--notes-per-measure",
@@ -174,7 +174,7 @@ Examples:
 
     args = parser.parse_args()
 
-    # Create test_data directory if it doesn't exist
+    # Create test_data directory if it doesn't exist (retained for backward compatibility)
     output_dir = "test_data"
     os.makedirs(output_dir, exist_ok=True)
 
@@ -207,7 +207,7 @@ Examples:
     if args.output:
         output_path = args.output
     else:
-        output_path = os.path.join(output_dir, "byte_music.musicxml")
+        output_path = "music.xml"
 
     # Write output
     with open(output_path, "w", encoding="utf-8") as f:
