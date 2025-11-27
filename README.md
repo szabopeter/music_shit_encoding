@@ -171,3 +171,32 @@ Contributions are welcome! Please feel free to submit issues and pull requests.
 ---
 
 **Note**: This project explores research-driven and enterprise-grade approaches to data encoding through music notation.
+
+
+
+
+python3 bytes_to_musical_xml.py sample.txt -o test_data/sample_music.musicxml -p "Sample Text"
+
+cd /Users/szaszdominik/programming/py/musicXML/music-shit2
+/Users/szaszdominik/Downloads/lilypond-2.24.4/bin/lilypond output.ly
+
+
+
+cd /Users/szaszdominik/programming/py/musicXML/music-shit2/Users/szaszdominik/Downloads/lilypond-2.24.4/bin/musicxml2ly \
+  -o output.ly \
+  test_data/sample_music.musicxml
+
+
+
+
+
+
+
+
+
+
+python3 bytes_to_musical_xml.py input.json -o test_data/sample_music.musicxml -p "Sample Text"                          
+python3 main.py
+python3 add_attachment.py
+python3 remove_attachment.py 
+python musical_xml_to_bytes.py output.xml -o decoded_sample.txt
