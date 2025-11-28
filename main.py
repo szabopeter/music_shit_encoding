@@ -17,7 +17,7 @@
 # # LILYPOND_DIR = "/Users/szaszdominik/Downloads/lilypond-2.24.4/bin"
 
 # # musicxml_path = "test_data/sample_music.musicxml"
-# # ly_path = "/Users/szaszdominik/programming/py/musicXML/music-shit2/output.ly"
+# # ly_path = "/Users/szaszdominik/programming/py/musicXML/music-shít2/output.ly"
 
 # # subprocess.run(
 # #     [PYTHON, f"{LILYPOND_DIR}/musicxml2ly", "-o", ly_path, musicxml_path],

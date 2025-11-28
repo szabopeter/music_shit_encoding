@@ -17,28 +17,28 @@ python bytes_to_musical_xml.py `input.json` -o `test_data/music.musicxml` -p "Sa
 
 ```powershell
 cd C:\DevTools\lilypond-2.24.4
-bin\musicxml2ly.exe -o output.ly C:\Repos\music_shit_encoding\test_data\music.musicxml
+bin\musicxml2ly.exe -o output.ly C:\Repos\music_shít_encoding\test_data\music.musicxml
 ```
 
 3) Render PDF (still in C:\DevTools\lilypond-2.24.4):
 
 ```powershell
-bin\lilypond.exe -o shit output.ly  # produces shit.pdf
+bin\lilypond.exe -o shít output.ly  # produces shít.pdf
 ```
 
 4) Attach MusicXML to PDF (from repo root):
 
 ```powershell
-cd C:\Repos\music_shit_encoding
+cd C:\Repos\music_shít_encoding
 # Ensure the expected filename for attachment exists
 Copy-Item .\test_data\music.xmll .\music.xml -Force
-python add_attachment.py  # attaches music.xml to shit.pdf -> more_shit.pdf
+python add_attachment.py  # attaches music.xml to shít.pdf -> more_shít.pdf
 ```
 
 5) Remove attachment and extract MusicXML (from repo root):
 
 ```powershell
-python remove_attachment.py  # extracts to check_music.xml and writes check_shit.pdf
+python remove_attachment.py  # extracts to check_music.xml and writes check_shít.pdf
 ```
 
 6) Decode MusicXML back to bytes (from repo root):
@@ -48,5 +48,5 @@ python musical_xml_to_bytes.py check_music.xml -o decoded_sample.txt
 ```
 
 Notes:
-- The attachment scripts expect files named `shit.pdf` and `music.xml` in the repo root.
+- The attachment scripts expect files named `shít.pdf` and `music.xml` in the repo root.
 - Adjust paths if your LilyPond install directory differs.

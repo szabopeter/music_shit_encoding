@@ -1,4 +1,4 @@
-# Music Shit Encoding
+# Music Shít Encoding
 
 A bidirectional encoding-decoding system that converts arbitrary data to and from music notation formats, enabling data to be represented as printable PDF scores and optional MIDI files.
 
@@ -8,12 +8,12 @@ This project provides a novel approach to data serialization by leveraging music
 
 ### Important defaults
 ```
-input.json ==> music.xml ==> shit.pdf (withOUT embedded input.json) == more_shit.pdf (WITH embedded input.json)
+input.json ==> music.xml ==> shít.pdf (withOUT embedded input.json) == more_shít.pdf (WITH embedded input.json)
 ```
 
 Check back:
 ```
-more_shit.pdf ==> check_music.xml ==> check_input.json
+more_shít.pdf ==> check_music.xml ==> check_input.json
 ```
 
 
@@ -83,8 +83,8 @@ Notes:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/szabopeter/music_shit_encoding.git
-cd music_shit_encoding
+git clone https://github.com/szabopeter/music_shít_encoding.git
+cd music_shít_encoding
 ```
 
 2. Install dependencies:
@@ -109,18 +109,18 @@ python bytes_to_musical_xml.py sample.txt -o test_data/sample_music.musicxml -p 
 
 # 2) Convert MusicXML to LilyPond (run from C:\DevTools\lilypond-2.24.4)
 cd C:\DevTools\lilypond-2.24.4
-bin\musicxml2ly.exe -o output.ly C:\Repos\music_shit_encoding\test_data\sample_music.musicxml
+bin\musicxml2ly.exe -o output.ly C:\Repos\music_shít_encoding\test_data\sample_music.musicxml
 
 # 3) Render PDF (still in C:\DevTools\lilypond-2.24.4)
-bin\lilypond.exe -o shit output.ly  # produces shit.pdf
+bin\lilypond.exe -o shít output.ly  # produces shít.pdf
 
 # 4) Attach MusicXML to PDF (from repo root)
-cd C:\Repos\music_shit_encoding
+cd C:\Repos\music_shít_encoding
 Copy-Item .\test_data\sample_music.musicxml .\music.xml -Force
-python add_attachment.py  # -> more_shit.pdf
+python add_attachment.py  # -> more_shít.pdf
 
 # 5) Remove attachment and extract MusicXML (from repo root)
-python remove_attachment.py  # -> check_shit.pdf and check_music.xml
+python remove_attachment.py  # -> check_shít.pdf and check_music.xml
 
 # 6) Decode MusicXML back to bytes (from repo root)
 python musical_xml_to_bytes.py check_music.xml -o decoded_sample.txt
@@ -141,14 +141,14 @@ Decoder (`musical_xml_to_bytes.py`):
 ## Project Structure
 
 ```
-music_shit_encoding/
+music_shít_encoding/
 ├── README.md                      # This file
 ├── LICENSE                        # MIT License
 ├── requirements.txt               # Python dependencies
 ├── bytes_to_musical_xml.py        # Encoder: converts arbitrary data to MusicXML
 ├── musical_xml_to_bytes.py        # Decoder: converts MusicXML back to data
-├── add_attachment.py              # Attaches music.xml to shit.pdf -> more_shit.pdf
-├── remove_attachment.py           # Extracts from more_shit.pdf -> check_music.xml
+├── add_attachment.py              # Attaches music.xml to shít.pdf -> more_shít.pdf
+├── remove_attachment.py           # Extracts from more_shít.pdf -> check_music.xml
 ├── sample.txt                     # Example test file
 └── test_data/                     # Output directory for generated MusicXML files
 ```
@@ -177,12 +177,12 @@ Contributions are welcome! Please feel free to submit issues and pull requests.
 
 python3 bytes_to_musical_xml.py sample.txt -o test_data/sample_music.musicxml -p "Sample Text"
 
-cd /Users/szaszdominik/programming/py/musicXML/music-shit2
+cd /Users/szaszdominik/programming/py/musicXML/music-shít2
 /Users/szaszdominik/Downloads/lilypond-2.24.4/bin/lilypond output.ly
 
 
 
-cd /Users/szaszdominik/programming/py/musicXML/music-shit2/Users/szaszdominik/Downloads/lilypond-2.24.4/bin/musicxml2ly \
+cd /Users/szaszdominik/programming/py/musicXML/music-shít2/Users/szaszdominik/Downloads/lilypond-2.24.4/bin/musicxml2ly \
   -o output.ly \
   test_data/sample_music.musicxml
 

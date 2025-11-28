@@ -12,7 +12,7 @@ filespec = AttachedFileSpec.from_filepath(pdf, Path(xml_file_path))
 
 dest_xml_file = pdf.attachments.get(xml_file_path, None)
 
-dest_pdf_file_name = 'check_shit.pdf'
+dest_pdf_file_name = 'check_shít.pdf'
 
 pdf.save(dest_pdf_file_name)
 
