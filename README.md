@@ -2,6 +2,8 @@
 
 A bidirectional encoding-decoding system that converts arbitrary data to and from music notation formats, enabling data to be represented as printable PDF scores and optional MIDI files.
 
+https://www.meetup.com/coding-fever-powered-by-adroit-group/events/311894764/
+
 ## Overview
 
 This project provides a novel approach to data serialization by leveraging music notation as an encoding medium. Convert any data into music-xml format, generate beautiful PDF scores and MIDI files, and decode the music back to retrieve the original data.
